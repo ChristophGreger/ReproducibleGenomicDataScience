@@ -1,0 +1,84 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+\usepackage[margin=2.1cm]{geometry}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{hyperref}
+
+\definecolor{heading}{HTML}{203B50}
+\definecolor{placeholder}{HTML}{59636C}
+\hypersetup{
+  colorlinks=true,
+  urlcolor=heading,
+  linkcolor=heading,
+  pdftitle={Reproduction Plan},
+  pdfauthor={Christoph Greger},
+  pdfsubject={Reproducible Genomic Data Science}
+}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\setlength{\emergencystretch}{2em}
+\titleformat{\section}{\large\bfseries\color{heading}}{\thesection.}{0.5em}{}
+\titlespacing*{\section}{0pt}{10pt}{5pt}
+
+\newcommand{\placeholder}[1]{{\color{placeholder}\textit{[#1]}}}
+\newcommand{\field}[2]{\textbf{#1}\ #2\par}
+
+\begin{document}
+
+{\LARGE\bfseries\color{heading} Reproduction Plan}\par
+\vspace{2pt}
+\textbf{Author:} Christoph Greger
+\hfill \textbf{Course:} Reproducible Genomic Data Science\par
+\vspace{3pt}
+{\color{heading}\hrule}
+
+\section{Paper and scientific claim}
+
+\field{Full reference.}{Hoffmann, J., Wallnig, J., Dai, Z., Tsoy, O., Blumenthal, D.~B., \& Hartebrodt, A. (2026). \textit{AlterNet: Alternative splicing-aware gene regulatory network inference}. bioRxiv [Preprint; version posted 2 March 2026]. \url{https://doi.org/10.1101/2025.11.21.689745}}
+
+\field{Main scientific contribution.}{The paper introduces AlterNet, a pipeline for inferring and annotating gene regulatory networks that account for alternative splicing. By treating different isoforms of a transcription factor as distinct regulators, it infers isoform-specific regulatory relationships that may be obscured when expression is analysed only at the gene level.}
+
+\field{Scientific claim to investigate.}{In the dilated cardiomyopathy (DCM) dataset, AlterNet's isoform-specific network contains more non-principal transcription factor isoforms with unique or missing Pfam domains relative to their principal isoforms than expected in randomly sampled subnetworks of AlterNet's AS-aware GRN, each containing the same number of edges as the isoform-specific network. This supports the hypothesis that these isoforms have distinct functional profiles that could explain regulatory interactions that are absent from or assigned lower importance in conventional gene-level GRNs.}
+
+\section{Reproduction target}
+
+\field{Exact result and scope.}{I will reproduce Figure~3E and~3F for the DCM dataset. These panels compare the numbers of non-principal TF isoforms with at least one unique (E) or missing (F) Pfam domain, relative to their corresponding principal isoforms, against background distributions from 1,000 randomly sampled subnetworks of AlterNet's filtered AS-aware GRN, each with the same number of edges as the filtered isoform-specific network.}
+
+\field{Evaluation metrics and reported values.}{Figure~3E counts distinct non-principal TF isoforms with at least one Pfam domain absent from their principal isoform; Figure~3F counts distinct non-principal TF isoforms missing at least one domain present in their principal isoform. Counts are based on DIGGER/APPRIS annotations. In each panel, the histogram shows the distribution of these counts across 1,000 sampled subnetworks. The calculations are described in detail in Section~4.3. The empirical \(P\)-value, \(P=(1+b)/1001\), is computed separately for each panel, where \(b\) is the number of the 1,000 random subnetworks containing at least as many non-principal TF isoforms with additional (E) or missing (F) Pfam domains as the isoform-specific network. The paper reports \(P=0.001\) for both panels, corresponding to \(b=0\) under the stated formula.}
+
+\field{Link to the scientific claim.}{Pfam domains are associated with protein functions. An excess of non-principal TF isoforms with additional or missing Pfam domains, compared with random subnetworks, supports the hypothesis that these isoforms differ functionally from their principal isoforms. Such differences could explain regulatory links inferred by AlterNet that are absent from or assigned lower importance in gene-level GRNs.}
+
+\field{Note.}{The Figure~3 caption describes sampling from the filtered AS-aware GRN, whereas Section~4.3 specifies the unfiltered AS-aware GRN. I will initially use the filtered AS-aware GRN as the sampling background and reassess this choice after inspecting the authors' scripts and the reproduction results.}
+
+\newpage
+\section{Available resources and feasibility}
+
+\field{Authors' source code.}{The AlterNet package is available at \url{https://github.com/bionetslab/AlterNet}. Scripts for reproducing the paper's results are available at \url{https://github.com/bionetslab/alternet-manuscript}. However, the provided scripts are substantially incomplete and very poorly documented.}
+
+\textbf{Required datasets.}
+\begin{itemize}
+\raggedright
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+\item DCM RNA-seq data (166 samples): \href{https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE141910}{MAGNet (GEO: GSE141910)}.
+\item Human transcription factor list (\texttt{allTFs\_hg38.txt}): \href{https://resources.aertslab.org/cistarget/tf_lists/}{Aerts lab}.
+\item Principal/non-principal isoform classifications: \href{https://apprisws.bioinfo.cnio.es/pub/}{APPRIS}.
+\item Isoform-level Pfam-domain annotations: \href{https://exbio.wzw.tum.de/digger/download/}{DIGGER}.
+\item Ensembl transcript-ID, gene-ID and gene-name mapping: \href{https://www.ensembl.org/biomart/martview}{Ensembl BioMart}. Currently inaccessible. Maybe php?
+\end{itemize}
+
+\field{Potential obstacles.}{The compressed FASTQ files for the 166 DCM samples total approximately 1~TB, and I am unsure whether download limits could hinder data acquisition. The data are distributed across many individual files in an archive structure that I find difficult to navigate, so I do not yet know whether I will be able to download all required files successfully. For DCM, the paper reports 170 minutes (approximately 3 hours) for AS-aware GRN inference and 276 minutes (4 hours and 36 minutes) for the total AlterNet runtime on a shared workstation with 528~GB RAM and 96 CPU threads (Table~3). The paper does not report the runtime of Kallisto quantification, so I cannot yet estimate the additional preprocessing time. The Kallisto preprocessing procedure is not documented in the provided scripts, and the repositories do not include the complete DCM transcript-TPM matrix. I will therefore need to infer the required input format from the small NF example matrix and write a script to combine the per-sample Kallisto outputs, add gene IDs and convert the results into the format expected by AlterNet.}
+
+\vspace{\baselineskip}
+These omissions give me the strong impression that the authors have no interest in others reproducing their work.\par
+
+\section*{AI Declaration}
+GPT-6 Astra was used to generate all \LaTeX{} code for this document and to assist with paraphrasing.
+
+\end{document}
