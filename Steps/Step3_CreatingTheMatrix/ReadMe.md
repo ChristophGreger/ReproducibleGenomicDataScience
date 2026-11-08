@@ -1,6 +1,6 @@
 # Creating the transcript TPM matrix
 
-We now need to combine the individual `abundance.tsv` files from kallisto into a single matrix with the same layout as the authors' [`minimal_NF_magnet_prefiltered_tpm.tsv`](../../AlterNetCode/data/minimal_NF_magnet_prefiltered_tpm.tsv): one row per transcript, the columns `transcript_id` and `gene_id`, and one TPM column per sequencing run. This step creates the complete matrix before the subsequent filtering and normalization steps.
+We now need to combine the individual `abundance.tsv` files from kallisto into a single matrix with the same layout as the authors' [`minimal_NF_magnet_prefiltered_tpm.tsv`](../../AlterNetCode/data/minimal_NF_magnet_prefiltered_tpm.tsv): one row per transcript, the columns `transcript_id` and `gene_id`, and one TPM column per sequencing run. This step creates the complete matrix before the subsequent APPRIS and expression filters.
 
 To add the gene IDs, we need a mapping from transcript IDs to gene IDs. We obtain this mapping from Ensembl BioMart. I used **Ensembl release 116** for the kallisto transcriptome index, so I also downloaded the BioMart annotation for that release. I selected the fields needed to reproduce the authors' BioMart file with the newer annotation:
 
@@ -16,7 +16,7 @@ The downloaded file is stored in [`files/special_files/mart_export.txt`](../../f
 
 I then asked ChatGPT to write [`create_matrix.py`](create_matrix.py), which combines the new BioMart mapping with all individual kallisto `abundance.tsv` files to create the large transcript TPM matrix.
 
-A second README, [`ReadMeFilteringandNormalization.md`](ReadMeFilteringandNormalization.md), is reserved for explaining the subsequent filtering and normalization steps needed to prepare a suitable matrix for the analysis.
+A second README, [`ReadMeFilteringandNormalization.md`](ReadMeFilteringandNormalization.md), explains the subsequent APPRIS and expression filters. Gene aggregation and normalization are left to `run_alternet.py`.
 
 ## Written by ChatGPT
 
