@@ -50,7 +50,7 @@ allow-direct-references = true
 
 [tool.pixi.workspace]
 channels = ["conda-forge"]
-platforms = ["linux-64"]
+platforms = ["linux-64", "osx-64"]
 
 [tool.pixi.dependencies]
 python = "*" 
@@ -72,6 +72,11 @@ graphviz = "*"
 # This section remains for pure-Python packages not available or preferred from Conda,
 # but it currently only contains the local editable install.
 alternet = { path = ".", editable = true }
+
+[tool.pixi.target.osx-64.pypi-dependencies]
+# Last releases with Python 3.11 Intel macOS wheels; avoid local C/Rust builds.
+lda = "==3.0.0"
+gseapy = "==1.1.2"
 
 [tool.pixi.environments]
 kernel = ["kernel"]

@@ -19,6 +19,8 @@ During the import, exceptions were added to `AlterNetCode/.gitignore` for the tw
 
 After the import, GPT-6 Astra switched the SignifiKANTE dependency from SSH to HTTPS at my request and updated the corresponding lockfile entries, the local package checksum, and this README. The pinned SignifiKANTE commit and package versions were preserved.
 
+Codex (GPT-6.1 Sol) subsequently added Intel macOS support so I can test the code on my Apple Silicon Mac using Rosetta 2, while keeping Linux support. The macOS environment uses `lda` 3.0.0 and `gseapy` 1.1.2 because these versions provide prebuilt Intel Mac packages and avoid requiring local C/Rust compilation. These version constraints apply only to macOS.
+
 The original documentation, including installation and usage instructions, is available in [`AlterNetCode/README.md`](AlterNetCode/README.md).
 
 ## Installation with Pixi
@@ -32,4 +34,6 @@ pixi install
 
 This installs the dependencies and AlterNet itself as an editable package, so changes in `AlterNetCode/src/alternet/` do not require reinstalling it.
 
-The current configuration supports **Linux x86_64 (`linux-64`)** and requires Git to fetch the public `SignifiKANTE` dependency over HTTPS. No GitHub account or SSH key is needed.
+The configuration supports **Linux x86_64 (`linux-64`)** and **Intel macOS (`osx-64`)**. On Apple Silicon Macs, Rosetta 2 must be installed; Pixi automatically selects the Intel environment. Use a current Pixi release (tested with 0.84.1).
+
+Git is required to fetch the public `SignifiKANTE` dependency over HTTPS. No GitHub account or SSH key is needed.
