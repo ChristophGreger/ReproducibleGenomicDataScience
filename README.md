@@ -17,6 +17,8 @@ Details of the imported copy:
 
 During the import, exceptions were added to `AlterNetCode/.gitignore` for the two bundled files `data/appris_data.appris.txt` and `data/digger_data.csv` so that they can also be tracked normally in this repository. All other files were copied without changes.
 
+After the import, GPT-6 Astra switched the SignifiKANTE dependency from SSH to HTTPS at my request and updated the corresponding lockfile entries, the local package checksum, and this README. The pinned SignifiKANTE commit and package versions were preserved.
+
 The original documentation, including installation and usage instructions, is available in [`AlterNetCode/README.md`](AlterNetCode/README.md).
 
 ## Installation with Pixi
@@ -30,4 +32,4 @@ pixi install
 
 This installs the dependencies and AlterNet itself as an editable package, so changes in `AlterNetCode/src/alternet/` do not require reinstalling it.
 
-The current configuration supports **Linux x86_64 (`linux-64`)** and requires Git with SSH access to GitHub to fetch the `SignifiKANTE` dependency.
+The current configuration supports **Linux x86_64 (`linux-64`)** and requires Git to fetch the public `SignifiKANTE` dependency over HTTPS. No GitHub account or SSH key is needed.

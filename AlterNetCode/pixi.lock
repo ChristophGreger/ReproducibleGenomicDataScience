@@ -288,7 +288,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/32/e9/c1d43543da87cd27e8e2a74db85cf0b6c5cff2d5f04a86bd584d2fbc2bb0/scanpy-1.11.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/83/11/00d3c3dfc25ad54e731d91449895a79e4bf2384dc3ac01809010ba88f6d5/seaborn-0.13.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/9d/b7/7d4c95c7b8525dabea23c548a1bb068d7a61635d544e8c92c51e784dad63/session_info2-0.2.3-py3-none-any.whl
-      - pypi: git+ssh://git@github.com/bionetslab/SignifiKANTE.git?rev=main#8d089562fbc9222dc3c455a4bc46030049ea200a
+      - pypi: git+https://github.com/bionetslab/SignifiKANTE.git?rev=main#8d089562fbc9222dc3c455a4bc46030049ea200a
       - pypi: https://files.pythonhosted.org/packages/f1/7b/ce1eafaf1a76852e2ec9b22edecf1daa58175c090266e9f6c64afcd81d91/stack_data-0.6.3-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/67/49/ac803ca093ec3845184a752a91cd84511245e1f97103b15cfe32794a3bb0/statsmodels-0.14.5-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/24/99/4772b8e00a136f3e01236de33b0efda31ee7077203ba5967fcc76da94d65/texttable-1.7.0-py2.py3-none-any.whl
@@ -592,7 +592,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/32/e9/c1d43543da87cd27e8e2a74db85cf0b6c5cff2d5f04a86bd584d2fbc2bb0/scanpy-1.11.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/83/11/00d3c3dfc25ad54e731d91449895a79e4bf2384dc3ac01809010ba88f6d5/seaborn-0.13.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/9d/b7/7d4c95c7b8525dabea23c548a1bb068d7a61635d544e8c92c51e784dad63/session_info2-0.2.3-py3-none-any.whl
-      - pypi: git+ssh://git@github.com/bionetslab/SignifiKANTE.git?rev=main#8d089562fbc9222dc3c455a4bc46030049ea200a
+      - pypi: git+https://github.com/bionetslab/SignifiKANTE.git?rev=main#8d089562fbc9222dc3c455a4bc46030049ea200a
       - pypi: https://files.pythonhosted.org/packages/67/49/ac803ca093ec3845184a752a91cd84511245e1f97103b15cfe32794a3bb0/statsmodels-0.14.5-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/24/99/4772b8e00a136f3e01236de33b0efda31ee7077203ba5967fcc76da94d65/texttable-1.7.0-py2.py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/d0/30/dc54f88dd4a2b5dc8a0279bdd7270e735851848b762aeb1c1184ed1f6b14/tqdm-4.67.1-py3-none-any.whl
@@ -636,7 +636,7 @@ packages:
 - pypi: ./
   name: alternet
   version: 0.1.0
-  sha256: fb59587a991a305b3d21666bb90714e664767efa1e39dd5e1b068b428aacae47
+  sha256: 0670f5a1aefabaa0ac5245e1b419fa6bdeed79d16f8ffa808ddd539467affc8d
   requires_dist:
   - pip
   - ipykernel
@@ -652,7 +652,7 @@ packages:
   - networkx
   - igraph
   - gseapy
-  - signifikante @ git+ssh://git@github.com/bionetslab/SignifiKANTE.git@main
+  - signifikante @ git+https://github.com/bionetslab/SignifiKANTE.git@main
   - graphviz
   requires_python: '>=3.10'
   editable: true
@@ -4599,7 +4599,7 @@ packages:
   - pkg:pypi/setuptools?source=hash-mapping
   size: 748788
   timestamp: 1748804951958
-- pypi: git+ssh://git@github.com/bionetslab/SignifiKANTE.git?rev=main#8d089562fbc9222dc3c455a4bc46030049ea200a
+- pypi: git+https://github.com/bionetslab/SignifiKANTE.git?rev=main#8d089562fbc9222dc3c455a4bc46030049ea200a
   name: signifikante
   version: 0.1.0
   requires_dist:
