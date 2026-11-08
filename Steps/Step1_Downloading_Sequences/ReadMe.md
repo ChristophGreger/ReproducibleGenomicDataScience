@@ -6,6 +6,16 @@ I then asked **ChatGPT** to write a Python script that runs **six downloads simu
 
 The downloads themselves are handled by the **SRA Toolkit**, which is provided by the **National Center for Biotechnology Information (NCBI)** specifically for this purpose.
 
+## Installing the SRA Toolkit
+
+With Homebrew installed, install the [SRA Toolkit](https://formulae.brew.sh/formula/sratoolkit) using:
+
+```bash
+brew install sratoolkit
+```
+
+This provides the `prefetch` and `fasterq-dump` commands used in Steps 1 and 2.
+
 ## Script usage
 
 > The script and this usage documentation were written entirely by ChatGPT.
