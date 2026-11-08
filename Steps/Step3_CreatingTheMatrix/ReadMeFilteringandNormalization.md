@@ -8,7 +8,9 @@ The original BioMart mapping, [`biomart_ensembl116.txt`](../../files/special_fil
 
 We first retain only transcripts listed in APPRIS with `Transcript type == protein_coding`. This is an exact match, following the authors' notebook: a value such as `protein_coding,RT` does not match. Transcripts absent from APPRIS are also excluded. Selection uses the transcript-type field rather than the principal/alternative isoform labels or APPRIS scores.
 
-Next, we remove isoforms with **TPM > 0 in fewer than 50% of samples**. With our 166 samples, at least **83 positive sample values** are required; exactly 83 is sufficient. The fraction is calculated using only the sample columns. Each condition must be processed separately, as described in Section 4.2 of the paper.
+Next, we retain isoforms with **TPM > 0 in at least 90% of samples**. With our 166 samples, this requires **at least 150 positive sample values**. The fraction is calculated using only the sample columns. Each condition is processed separately, as described in Section 4.2 of the paper.
+
+Section 4.2 of the paper specifies a 50% cutoff. I chose the **90% cutoff** used in the manuscript repository's preprocessing notebook because network inference is already expected to take a long time. On our data, the stricter cutoff reduces the number of target genes from 15,278 to 11,347 and the number of TF transcript predictors from 7,266 to 2,409. [Manuscript preprocessing notebook](https://github.com/bionetslab/alternet-manuscript/blob/main/python/preprocess_magnet.ipynb)
 
 Gene aggregation and normalization are left to [`run_alternet.py`](../../AlterNetCode/src/alternet/runners/run_alternet.py). Our preprocessing script only filters transcript rows and preserves their TPM values. The current runner computes Z-score matrices but still passes unscaled TPMs to inference; that existing behavior is unchanged here and needs checking when configuring the AlterNet run.
 
@@ -30,7 +32,7 @@ By default, it reads:
 - **Matrix:** `files/matrix/transcript_tpm_unfiltered.tsv`
 - **APPRIS annotation:** `files/special_files/appris_data.appris.txt`
 - **Coding criterion:** APPRIS `Transcript type == protein_coding`
-- **Expression criterion:** TPM > 0 in at least half of the samples
+- **Expression criterion:** TPM > 0 in at least 90% of the samples
 
 It creates a new directory, **`files/matrix/filtered/`**, containing:
 
@@ -45,11 +47,11 @@ The script preserves the TPM field values and retained row order. It validates A
 | --- | --- | --- |
 | `--input PATH` | Unfiltered transcript TPM matrix. | `files/matrix/transcript_tpm_unfiltered.tsv` |
 | `--appris PATH` | APPRIS score table containing transcript IDs, gene IDs, and transcript types. | `files/special_files/appris_data.appris.txt` |
-| `--min-positive-fraction Q` | Minimum sample fraction with TPM > 0; accepts a decimal or fraction. | `0.5` |
+| `--min-positive-fraction Q` | Minimum sample fraction with TPM > 0. Accepts a decimal or fraction. | `0.9` |
 | `--output-dir PATH` | A new destination directory. | `files/matrix/filtered` |
 | `-h`, `--help` | Show all options and defaults. | - |
 
-The required positive sample count is rounded up: 83 of 166 samples, or 3 of 5 samples, at the default threshold. For another condition, supply a matrix containing only that condition's samples and choose a separate output directory.
+The required positive sample count is rounded up to 150 of 166 samples at the default threshold. For another condition, supply a matrix containing only that condition's samples and choose a separate output directory.
 
 The output directory must not already exist. To repeat the analysis, choose a new `--output-dir`. Both output files are published together only after successful processing. Errors or **Ctrl+C** clean up temporary output, and input files remain unchanged. Custom relative paths are resolved from the current working directory; quote paths containing spaces. Generated data remain under `files/`, which is excluded from Git.
 
@@ -71,14 +73,14 @@ Pass these objects as the corresponding arguments to `alternet_pipeline`. This s
 
 ## Execution and verification
 
-The APPRIS-based filtering was executed on **8 November 2026**:
+The APPRIS-based filtering was executed on **9 November 2026**.
 
 | Processing stage | Transcripts remaining |
 | --- | ---: |
 | Unfiltered matrix | 670,670 |
 | Present in APPRIS with `Transcript type == protein_coding` | 277,916 |
-| Positive TPM in at least 83 of 166 samples | 71,320 |
+| Positive TPM in at least 150 of 166 samples | 24,397 |
 
-The resulting matrix contains **71,320 transcripts from 15,278 genes across 166 samples**. The APPRIS membership filter removes 239,785 transcripts absent from the downloaded annotation and 152,969 records with other transcript types. The prevalence filter then removes 206,596 further transcripts. Exactly 739 retained transcripts have positive TPM in exactly 83 samples.
+The resulting matrix contains **24,397 transcripts from 11,347 genes across 166 samples**. The APPRIS membership filter removes 239,785 transcripts absent from the downloaded annotation and 152,969 records with other transcript types. The prevalence filter then removes 253,519 further transcripts. Exactly 742 retained transcripts have positive TPM in exactly 150 samples.
 
-An independent NumPy-based calculation reproduced all filter decisions. The complete output file's SHA-256 checksum matched the independently selected original matrix lines byte-for-byte, verifying retained IDs, TPM field values, column order, and row order. Additional fixture checks covered exact type matching, missing annotations, duplicate/conflicting mappings, invalid TPMs in excluded rows, the 50% boundary, odd sample counts, and cleanup after failures or interruption.
+An independent check selected the rows with at least 150 positive TPM values from the previously verified 50% output. The SHA-256 checksum of those rows and the original header matched the new TSV exactly, verifying retained IDs, TPM field values, and row and column order.

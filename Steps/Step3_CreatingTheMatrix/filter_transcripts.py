@@ -26,7 +26,7 @@ def positive_fraction(value):
     try:
         fraction = Fraction(value)
     except (ValueError, ZeroDivisionError) as error:
-        raise argparse.ArgumentTypeError("Use a fraction between 0 and 1, e.g. 0.5 or 1/2") from error
+        raise argparse.ArgumentTypeError("Use a fraction between 0 and 1, e.g. 0.9 or 9/10") from error
     if not 0 <= fraction <= 1:
         raise argparse.ArgumentTypeError("The positive fraction must be between 0 and 1")
     return fraction
@@ -235,7 +235,7 @@ def main():
                         help="Unfiltered raw transcript TPM matrix")
     parser.add_argument("--appris", type=Path, default=PROJECT_ROOT / "files/special_files/appris_data.appris.txt",
                         help="Headered APPRIS TSV with Ensembl Gene ID, Transcript ID and Transcript type")
-    parser.add_argument("--min-positive-fraction", type=positive_fraction, default="0.5",
+    parser.add_argument("--min-positive-fraction", type=positive_fraction, default="0.9",
                         help="Minimum sample fraction with TPM > 0; decimal or exact fraction between 0 and 1")
     parser.add_argument("--output-dir", type=Path, default=PROJECT_ROOT / "files/matrix/filtered",
                         help="New directory for the two outputs; must not already exist")
