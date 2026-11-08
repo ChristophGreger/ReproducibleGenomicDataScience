@@ -1,20 +1,33 @@
 # Reproducible Genomic Data Science
 
-Dieses Repository enthält die Materialien und den Code für die Reproduktion von AlterNet im Rahmen des Seminars.
+This repository contains the materials and code used to reproduce AlterNet as part of the seminar.
 
-## AlterNet-Code
+## AlterNet code
 
-Der Ordner [`AlterNetCode/`](AlterNetCode/) enthält eine lokale Kopie des gesamten versionierten Inhalts von [bionetslab/alternet](https://github.com/bionetslab/alternet/tree/main). Die Dateien wurden direkt in dieses Projekt kopiert, ohne die Git-Historie zu übernehmen. Der Ordner ist kein Submodul und kein eigenständiges Git-Repository.
+The [`AlterNetCode/`](AlterNetCode/) directory contains a local copy of all tracked files from [bionetslab/alternet](https://github.com/bionetslab/alternet/tree/main). The files were copied directly into this project without their Git history. The directory is neither a submodule nor a separate Git repository.
 
-Damit bleiben die Verwaltung und die Versionskontrolle möglichst einfach: Der AlterNet-Code wird zusammen mit den übrigen Projektdateien in diesem Repository verwaltet. Anpassungen, die für die Reproduktion nötig sind, können direkt in `AlterNetCode/` vorgenommen und gemeinsam mit den anderen Änderungen committet werden. Änderungen am Original-Repository werden nicht automatisch übernommen.
+This keeps project management and version control simple: the AlterNet code is maintained alongside the other project files in this repository. Any changes needed for the reproduction can be made directly in `AlterNetCode/` and committed together with the other project changes. Updates to the original repository are not applied automatically.
 
-Stand der übernommenen Kopie:
+Details of the imported copy:
 
-- Quelle: [bionetslab/alternet](https://github.com/bionetslab/alternet)
+- Source: [bionetslab/alternet](https://github.com/bionetslab/alternet)
 - Branch: `main`
 - Commit: [`ce1d35b827f02917d0ceaf19eee037e5fb06d396`](https://github.com/bionetslab/alternet/commit/ce1d35b827f02917d0ceaf19eee037e5fb06d396)
-- Kopiert am: 8. November 2026
+- Copied on: 8 November 2026
 
-Beim Import wurden in `AlterNetCode/.gitignore` Ausnahmen für die beiden mitgelieferten Dateien `data/appris_data.appris.txt` und `data/digger_data.csv` ergänzt, damit diese auch in diesem Repository regulär versioniert werden können. Alle übrigen Dateien wurden unverändert übernommen.
+During the import, exceptions were added to `AlterNetCode/.gitignore` for the two bundled files `data/appris_data.appris.txt` and `data/digger_data.csv` so that they can also be tracked normally in this repository. All other files were copied without changes.
 
-Die ursprüngliche Dokumentation mit Informationen zur Installation und Verwendung befindet sich in [`AlterNetCode/README.md`](AlterNetCode/README.md).
+The original documentation, including installation and usage instructions, is available in [`AlterNetCode/README.md`](AlterNetCode/README.md).
+
+## Installation with Pixi
+
+With [Pixi](https://pixi.prefix.dev/latest/installation/) installed, run the following from the root of this repository:
+
+```bash
+cd AlterNetCode
+pixi install
+```
+
+This installs the dependencies and AlterNet itself as an editable package, so changes in `AlterNetCode/src/alternet/` do not require reinstalling it.
+
+The current configuration supports **Linux x86_64 (`linux-64`)** and requires Git with SSH access to GitHub to fetch the `SignifiKANTE` dependency.
