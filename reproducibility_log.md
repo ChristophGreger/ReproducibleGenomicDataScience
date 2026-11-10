@@ -1,0 +1,54 @@
+# Reproducibility log
+
+This log follows my attempt to reproduce Figure 3E/F of AlterNet for the 166 MAGNet samples from donors with dilated cardiomyopathy (DCM). Dates are local to Berlin.
+
+## 25–31 October 2026 · Planning the reproduction
+
+- Read the paper, chose Figure 3E/F, and wrote the plan. We worked out which network edges go into the plots, how APPRIS identifies principal isoforms, and how DIGGER supplies exon and domain information. [Paper](Paper.pdf) · [Plan](Reproduction%20Plan/Greger_Christoph_Plan.pdf) · `ffd77fd`, `65e09bc`
+- The caption says to sample from a filtered network. The methods say to use the unfiltered network. We planned to start with the filtered one. The manuscript code also narrows the background to edges from non-principal isoforms and calculates the p-value differently.
+- Looked for the DCM inputs. GEO had processed gene expression, and the notebooks loaded a private transcript TPM matrix. BioMart was temporarily inaccessible. With no documented Kallisto reference or commands, I decided to quantify the original MAGNet reads.
+- Checked how AlterNet uses multiple cores. Dask splits target genes across workers. The two networks and ten repeats per network run in sequence. The example runner uses private paths, so we prepared a separate configurable runner and benchmark.
+- Restricted network access blocked the first GitHub clone. Retried with network access. On the Mac, PyArrow and NumPy versions clashed, and Dask needed permission to open a local port. Pinning PyArrow 22 and allowing local sockets got the test running. Both networks ran on the small NF example with two workers. Serial and parallel repeats agreed with the same seeds.
+- Installed and tested Miniconda on the Mac separately from the later Pixi setup. The first installer download hit the same network restriction and worked on retry.
+- Discussed local RAM, Google Cloud and AWS, storage and transfer costs. Full DCM scaling stayed unmeasured. Added `.gitignore` to keep large local files out of Git. `7c43cd5`
+
+## 1 November 2026 · Getting the reads and building the index
+
+- Selected DCM in the NCBI Run Selector for MAGNet (`PRJNA595151`) and saved the **166 run IDs**. Discussed download limits and cloud access. A ChatGPT-written script used the public SRA Toolkit and ran six downloads at a time. All 166 succeeded on their first recorded attempt. [Download instructions](Steps/Step1_Downloading_Sequences/ReadMe.md) · `8c0e622`
+- Installed kallisto 0.52.0 through Homebrew. Checked which reference to use and chose the complete human cDNA file, which includes both coding and non-coding transcripts. 
+- Built the index in the terminal with eight threads. Kallisto warned about trimming poly-A tails and replacing ambiguous bases. The finished index passed inspection and contained **670,670 transcripts**. [Index instructions](Steps/Step2_Kallisto/ReadMe.md) · `b0454dd`
+
+## 1–3 November 2026 · Quantifying the samples
+
+- Estimated the temporary disk space needed to unpack the largest SRA file. The processing script unpacks and quantifies one sample at a time, then deletes the temporary FASTQs. I used eight threads and chose `--rf-stranded` based on the library protocol.
+- During monitoring, kallisto sometimes used only one CPU core. We traced that to its expression estimation step. The first TPM tables looked empty because they began with zeros. We checked three tables against kallisto's HDF5 output and confirmed they contained valid TPMs.
+- Run `SRR10677035` was interrupted on 2 November. The next morning, processing resumed and skipped the completed samples. Verified all **166 abundance tables** and kept the original SRA files. [Quantification instructions](Steps/Step2_Kallisto/ReadMe.md) · `3f501bc`
+
+## 3–4 November 2026 · Trying Linux and comparing alternatives
+
+- My Linux `pixi install` failed. SignifiKANTE required `distributed` 2025.11.0, while Pixi selected 2025.10.0. Discussed clearing the old environment and aligning the versions. A successful Linux retry is still unverified.
+- Compared running on a workstation, in the cloud, or on Colab. These discussions did not produce a full DCM benchmark.
+
+## 8 November 2026 · Installing the project copy of AlterNet
+
+- Copied the authors' code into `AlterNetCode/` so I could edit and track it here. Kept the bundled APPRIS and DIGGER files. The notebook needed a separate Jupyter frontend. Documented `pixi install` and changed the SignifiKANTE download from SSH to HTTPS so it works without a GitHub SSH key. `a5b7e5c`, `8495488`, `a25f6dd`
+
+
+## 8–9 November 2026 · Building and filtering the matrix
+
+- Checked what suffixes like `.1` and `.5` mean. The GTEx loader strips them, but our MAGNet samples use a separate workflow. I downloaded BioMart for Ensembl 116, the same release as our Kallisto index, to assign a gene ID to each transcript. We checked the versions before removing the suffixes for AlterNet.
+- The BioMart download was already tab-separated. Used ChatGPT-written scripts to prepare it and combine the 166 sample tables. The combined matrix had **670,670 rows**. We checked all gene mappings and compared three columns with their source TPMs. [Matrix instructions](Steps/Step3_CreatingTheMatrix/ReadMe.md) · `f137f14`
+- The GTEx code filters by gene type, but one gene can produce both coding and non-coding transcripts. I downloaded a second BioMart export and found that the gene and transcript types differed for **160,176 transcripts**. We tested filtering with the BioMart transcript type and scaling the TPMs separately.
+- The authors' MAGNet notebook uses APPRIS for the coding filter. After the download page initially failed to load, I obtained the full Ensembl 116 APPRIS table. We kept only transcripts listed with `Transcript type` exactly equal to `protein_coding`. **277,916 transcripts** passed this step, and **71,320** passed the subsequent 50% expression cutoff. [MAGNet notebook](AlterNetCode/src/alternet/tutorials/preprocess_magnet_minimal.ipynb) · `b737822`
+- Checked the data passed to training in the minimal example. The paper describes training on Z-scores. The runner sends raw TPMs to GRNBoost2 and uses Z-scores later for correlations. Kept raw TPMs in the saved matrix. [Runner](AlterNetCode/src/alternet/runners/run_alternet.py)
+- Compared the paper's 50% cutoff with the manuscript notebook's 90%. I chose **90%** to cut the workload. We counted only sample columns and required positive TPM in at least 150 of 166 samples. The verified output has **24,397 transcripts from 11,347 genes**, including **2,409 TF isoforms** (down from 7,266 at 50%). [Filtering instructions](Steps/Step3_CreatingTheMatrix/ReadMeFilteringandNormalization.md) · `95beb19`
+
+## 9 November 2026 · Checking annotation versions
+
+- ChatGPT checked the candidate Ensembl releases for me to identify the source versions of the authors' bundled BioMart and APPRIS files. The files match Ensembl **112** and **113**, respectively. I could not determine which Ensembl release the authors used for their original Kallisto reference.
+- The authors' [example workflow](AlterNetCode/README.md#minimal-working-example) combines those BioMart and APPRIS files with DIGGER from Ensembl **99**. Across the bundled files, **2,311 of 9,012** TF transcripts mapped by BioMart and marked `protein_coding` in APPRIS lack Pfam annotations in DIGGER. The authors therefore faced the same annotation coverage problem with these inputs. The extent of this gap in the original DCM run is unknown.
+- Kept BioMart and APPRIS **116** for our data. The older APPRIS file misses 1,034 TF isoforms in our matrix. The TF list uses gene names and maps through BioMart. We found no DIGGER export for Ensembl 116. Since the authors' workflow used the same DIGGER file, we accepted its coverage for the reproduction and kept the bundled **Ensembl 99** file. It supplies domain annotations for **1,203 of 2,409 TF isoforms**.
+
+  In the future, I could look more closely at which domain annotations [Ensembl 116 BioMart](https://jun2026.archive.ensembl.org/biomart/martview) can export and whether its isoform-level Pfam annotations would be a suitable alternative for Figure 3E/F. For now, I am using the bundled Ensembl **99** DIGGER file for the reproduction.
+
+- The filtered DCM matrix is ready. The full DCM network run and reproduction of Figure 3E/F remain open.
