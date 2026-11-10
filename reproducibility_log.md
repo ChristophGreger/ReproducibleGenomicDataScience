@@ -52,3 +52,12 @@ This log follows my attempt to reproduce Figure 3E/F of AlterNet for the 166 MAG
   In the future, I could look more closely at which domain annotations [Ensembl 116 BioMart](https://jun2026.archive.ensembl.org/biomart/martview) can export and whether its isoform-level Pfam annotations would be a suitable alternative for Figure 3E/F. For now, I am using the bundled Ensembl **99** DIGGER file for the reproduction.
 
 - The filtered DCM matrix is ready. The full DCM network run and reproduction of Figure 3E/F remain open.
+
+## 10 November 2026 · Checking the bundled DIGGER version
+
+- I asked ChatGPT to check whether the exon and Pfam annotations in AlterNet's bundled `digger_data.csv` came from Ensembl 99 BioMart, as stated in the DIGGER paper's “Mapping of protein domains to exons” section. [DIGGER paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC7778957/) 
+- I asked ChatGPT to compare the annotations per transcript against the archived Ensembl data. In BioMart **99**, **61** of the DIGGER transcript IDs were absent. Among the shared transcripts, **331** had different exon ID sets and **54** had different Pfam ID sets. Ensembl **98** matched the exon IDs, Pfam IDs, and Pfam start and end positions exactly for **all 67,552 transcripts** in the bundled file. The Ensembl 99 attribution is wrong for this file 🙂. 
+- AlterNet drops all DIGGER columns except `Transcript stable ID`, `Exon stable ID`, `Exon rank in transcript`, and `Pfam ID`. The exon rank survives the import and goes unused afterwards 🙂. [AlterNet annotation code](AlterNetCode/src/alternet/annotation.py)
+- The further I get, the funnier it gets. I used to wonder how people caught all these little details before LLMs. Turns out they just didn't, lol.
+- I realised that I can get the required exon and Pfam annotations for our Ensembl **116** reference directly from BioMart. Using DIGGER for this part of AlterNet seems like a pointless detour, since AlterNet only uses the annotations that DIGGER originally obtained from BioMart.
+- I have decided to use **Ensembl 116 BioMart** for the exon and Pfam annotations too. Keeping everything on the same annotation release seems much more sensible, and getting the data is straightforward now that I know my way around Ensembl. I will make a small change to AlterNet's import code to handle the BioMart file format.
