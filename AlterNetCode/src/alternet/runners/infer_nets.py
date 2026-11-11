@@ -99,13 +99,13 @@ if __name__ == '__main__':
 
 
         start = time.monotonic()
-        canonical_grn = inference(gene_data=gene_data_cp, tf_list=gene_target_names, target_names = 'all', n_runs=runs)
+        canonical_grn = inference(gene_data=gene_data_cp_scaled, tf_list=gene_target_names, target_names = 'all', n_runs=runs)
         end = time.monotonic()
         runtime = {'canonical': end-start}
         
         canonical_grn.to_csv(op.join(results_path, f"{condi}_canonical.tsv"), header = True)
 
-        hybrid_data = create_hybrid_data(transcript_data_cp, gene_data_cp, tf_list)
+        hybrid_data = create_hybrid_data(transcript_data_cp_scaled, gene_data_cp_scaled, tf_list)
         hybrid_tf_names = list(tf_list['Transcript stable ID'].unique())
         target_names = list(gene_data_cp.columns)
 
