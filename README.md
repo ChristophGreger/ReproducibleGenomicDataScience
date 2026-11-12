@@ -28,12 +28,25 @@ The original documentation, including installation and usage instructions, is av
 With [Pixi](https://pixi.prefix.dev/latest/installation/) installed, run the following from the root of this repository:
 
 ```bash
-cd AlterNetCode
-pixi install
+./install_alternet.sh
 ```
 
-This installs the dependencies and AlterNet itself as an editable package, so changes in `AlterNetCode/src/alternet/` do not require reinstalling it.
+[`install_alternet.sh`](install_alternet.sh) runs `pixi install` in `AlterNetCode/`. This installs the dependencies and AlterNet itself as an editable package, so changes in `AlterNetCode/src/alternet/` do not require reinstalling it.
 
 The configuration supports **Linux x86_64 (`linux-64`)** and **Intel macOS (`osx-64`)**. On Apple Silicon Macs, Rosetta 2 must be installed; Pixi automatically selects the Intel environment. Use a current Pixi release (tested with 0.84.1).
 
 Git is required to fetch the public `SignifiKANTE` dependency over HTTPS. No GitHub account or SSH key is needed.
+
+## Set up and run DCM
+
+With Pixi installed, run from the repository root:
+
+```bash
+./setup_dcm.sh
+cd AlterNetCode
+pixi run python run_dcm.py
+```
+
+[`setup_dcm.sh`](setup_dcm.sh) first calls [`download_dcm_inputs.sh`](download_dcm_inputs.sh), then [`install_alternet.sh`](install_alternet.sh). It stops if either step fails. The DCM analysis is started separately with the command shown above. Both child scripts can also be run on their own with `./download_dcm_inputs.sh` or `./install_alternet.sh`.
+
+[`download_dcm_inputs.sh`](download_dcm_inputs.sh) downloads the filtered DCM TPM matrix, the Ensembl 116 BioMart mapping and APPRIS 116 from Google Drive (about 161 MB in total) into the paths used by [`run_dcm.py`](AlterNetCode/run_dcm.py). The three files are readable by anyone with their links; no Google login is needed. The script requires Bash, `curl`, and either `sha256sum` or `shasum`, checks each download against its SHA256 checksum, and skips files that already match. The original DIGGER file and human transcription factor list are already included in `AlterNetCode/data/`.
