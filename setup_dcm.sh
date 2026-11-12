@@ -7,4 +7,4 @@ REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 bash "$REPO_DIR/download_dcm_inputs.sh"
 bash "$REPO_DIR/install_alternet.sh"
 
-printf '\nSetup complete. Start the DCM run with:\n  cd "%s/AlterNetCode"\n  pixi run python run_dcm.py\n' "$REPO_DIR"
+printf '\nSetup complete. Start the DCM run in tmux with:\n  cd "%s"\n  ./run_dcm_tmux.sh\n' "$REPO_DIR"
