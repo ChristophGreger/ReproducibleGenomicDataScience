@@ -1,8 +1,10 @@
-# Creating the Ensembl 116 exon and Pfam table
+# Exploring an Ensembl 116 exon and Pfam table
 
-I want to use exon and Pfam annotations from **Ensembl release 116**, the same release as our cDNA reference, transcript-to-gene mapping, and APPRIS table. AlterNet obtains these annotations from its bundled DIGGER file. It collects the exon IDs and Pfam IDs into separate lists for each transcript and compares the sets between isoforms. I asked ChatGPT to write the scripts in this step to obtain those inputs from Ensembl 116. [AlterNet annotation code](../../AlterNetCode/src/alternet/annotation.py)
+I explored obtaining exon and Pfam annotations from **Ensembl release 116**, the same release as our cDNA reference, transcript-to-gene mapping, and APPRIS table. AlterNet obtains these annotations from its bundled DIGGER file. It collects the exon IDs and Pfam IDs into separate lists for each transcript and compares the sets between isoforms. I asked ChatGPT to write the scripts in this step to obtain those inputs from Ensembl 116. [AlterNet annotation code](../../AlterNetCode/src/alternet/annotation.py)
 
-The full BioMart export failed in the browser. A direct `curl` request also stopped after roughly 90 MB with an HTTP/2 error before BioMart returned its `[success]` marker. We therefore download the published BioMart database tables and assemble the export locally.
+The full BioMart export failed in the browser. A direct `curl` request also stopped after roughly 90 MB with an HTTP/2 error before BioMart returned its `[success]` marker. These scripts download the published BioMart database tables and assemble the export locally.
+
+On 11 November, I decided to use AlterNet's original DIGGER file for the reproduction. I do not yet fully understand ChatGPT's explanation of the chromosome selection and the other annotation filters, so I will leave the generated Ensembl 116 file unused for now. This step records the completed exploratory workflow. Evaluating the Ensembl 116 table and its filtering could be a later seminar extension. The DCM launcher uses the bundled DIGGER file. [Current DCM inputs](../../AlterNetCode/run_dcm.py)
 
 ## Completed run and saved output
 
@@ -64,7 +66,13 @@ The translation table is the connection between the other two tables. For each i
 
 The builder reproduces the BioMart attributes `ensembl_transcript_id`, `ensembl_exon_id`, and `pfam`, with unique rows and no filters. Each exon is paired with every distinct Pfam ID for that transcript. A transcript with 11 exons and 4 Pfam IDs therefore produces 44 rows. If the protein has no Pfam hit, there is one row per exon with a blank Pfam field. Transcripts without a translation are excluded, matching this BioMart query. [BioMart query documentation](https://jun2026.archive.ensembl.org/info/data/biomart/biomart_restful.html)
 
-A row associates an exon and a Pfam ID with the same transcript. DIGGER additionally maps domain coordinates to the exons that encode them. For the isoform comparisons in AlterNet, the annotation code collects the two ID columns separately and compares their sets. The repeated exon/Pfam combinations therefore give the required lists. [DIGGER paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC7778957/) · [AlterNet grouping code](../../AlterNetCode/src/alternet/annotation.py#L99-L104)
+A row associates an exon and a Pfam ID with the same transcript. DIGGER additionally maps domain coordinates to the exons that encode them. For the isoform comparisons in AlterNet, the annotation code collects the two ID columns separately and compares their sets. This explains why the exon/Pfam pairings and repeated rows can be reduced to independent ID sets for the comparison. Transcript selection and missing-annotation handling also affect the result. [DIGGER paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC7778957/) · [AlterNet grouping code](../../AlterNetCode/src/alternet/annotation.py#L99-L104)
+
+## Comparison with the bundled DIGGER file
+
+Running the same reconstruction with Ensembl 98 reproduced the exon and Pfam ID sets for all **67,552 transcripts** in AlterNet's bundled DIGGER file. Restricting the Ensembl 98 export to transcripts on **1–22, X and Y** with at least one Pfam ID also reproduced exactly the DIGGER transcript IDs. The full export contained **35,536 additional transcripts without Pfam hits** and **7,700 additional Pfam-annotated transcripts on other reference sequences**. The latter comprise 7,658 on alternative/Patch sequences, 29 on other scaffolds, and 13 on MT.
+
+AlterNet handles an entirely missing DIGGER entry differently from a present transcript with an empty Pfam list. The former produces empty difference lists, while the latter can produce Pfam IDs marked as missing relative to a comparison isoform. Gene-level intersections also differ. A future use of this Ensembl 116 table needs to account for that behavior when deciding which transcripts to include. [Comparison helpers](../../AlterNetCode/src/alternet/annotation.py#L113-L177) · [Gene-level intersections](../../AlterNetCode/src/alternet/annotation.py#L522-L558)
 
 ## Verification and use in AlterNet
 
@@ -86,4 +94,4 @@ shasum -a 256 files/special_files/biomart_exons_pfam_ensembl116.tsv
 
 On Linux, use `sha256sum` on the same file. The digest covers the exact contents and row order produced by this builder.
 
-AlterNet's current import explicitly drops DIGGER-specific coordinate columns. To use this TSV, that import needs to read tab-separated data and select the three shared columns before grouping by transcript. The Step 3 BioMart file continues to provide transcript-to-gene mappings, and APPRIS provides the transcript type and principal isoform labels. [Annotation import](../../AlterNetCode/src/alternet/annotation.py#L66-L104) · [Step 3](../Step3_CreatingTheMatrix/ReadMe.md)
+A future integration would read the TSV as tab-separated data, select the three shared columns before grouping, and explicitly define the transcript filters and missing-annotation behavior described above. Our reproduction uses the original DIGGER import. The Step 3 BioMart file provides transcript-to-gene mappings, and APPRIS provides the transcript type and principal isoform labels. [Annotation import](../../AlterNetCode/src/alternet/annotation.py#L66-L104) · [Step 3](../Step3_CreatingTheMatrix/ReadMe.md)

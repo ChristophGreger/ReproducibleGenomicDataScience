@@ -39,7 +39,7 @@ We use the raw SRA reads from **166 DCM runs** in BioProject **PRJNA595151** (GE
 
 ## DIGGER annotations
 
-We use the **Ensembl 99** DIGGER file bundled with AlterNet in this repository for the Pfam domain comparisons. [digger_data.csv](AlterNetCode/data/digger_data.csv)
+We use the DIGGER file bundled with AlterNet in this repository for the Pfam domain comparisons. [digger_data.csv](AlterNetCode/data/digger_data.csv)
 
 ## Human transcription factor list
 
@@ -57,10 +57,10 @@ a69a3e7ffc194d934c8bdeed8eaef1a9127aa3db71b697f26313170497b3bad0  files/special_
 
 ## Ensembl version provenance
 
-ChatGPT checked the annotation files bundled with the authors' public AlterNet example against candidate Ensembl releases. The BioMart transcript-to-gene mappings matched **Ensembl 112**, and the APPRIS file matched the **Ensembl 113** archive byte for byte. The bundled DIGGER mapping is based on **Ensembl 99**. [Reproducibility log](reproducibility_log.md#9-november-2026--checking-annotation-versions)
+ChatGPT checked the annotation files bundled with the authors' public AlterNet example against candidate Ensembl releases. The BioMart transcript-to-gene mappings matched **Ensembl 112**, and the APPRIS file matched the **Ensembl 113** archive byte for byte. According to the DIGGER paper, its exon and domain annotations were obtained from **Ensembl 99**, but a direct comparison showed that the relevant annotations in AlterNet's bundled DIGGER file match a filtered subset of **Ensembl 98**. [DIGGER paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC7778957/) · [Reproducibility log](reproducibility_log.md#10-november-2026--checking-the-bundled-digger-version)
 
 These versions describe the bundled example files. The exact FASTA used for the authors' original kallisto run and the full set of annotation versions used for their DCM analysis remain unknown. Their public preprocessing notebook starts from precomputed transcript TPMs.
 
-For this reproduction, the cDNA reference, BioMart mapping, and APPRIS table all use the human **Ensembl 116** annotation (GENCODE 50). We kept the authors' **Ensembl 99** DIGGER file for the Pfam domain comparisons. It provides Pfam annotations for **1,203 of 2,409** TF isoforms in our filtered DCM matrix. We accepted this coverage limitation because the authors' bundled inputs have the same kind of gap.
+For this reproduction, the cDNA reference, BioMart mapping, and APPRIS table all use the human **Ensembl 116** annotation (GENCODE 50). We kept the authors' DIGGER file for the Pfam domain comparisons. It provides Pfam annotations for **1,203 of 2,409** TF isoforms in our filtered DCM matrix. We accepted this coverage limitation because the authors' bundled inputs have the same kind of gap.
 
-Ensembl 116 BioMart also offers Pfam IDs and domain coordinates. I may explore whether a BioMart export can provide the isoform-level Pfam data needed for Figure 3E/F as an alternative to DIGGER.
+We have also reconstructed an Ensembl 116 exon/Pfam export from the official BioMart tables. Evaluating its use with appropriate transcript filters and missing-annotation handling could be a future seminar extension. The workflow and verification are documented in Step 4. [Exploratory BioMart workflow](Steps/Step4_DownloadingCreatingOwnDIGGER/README.md)
