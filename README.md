@@ -50,3 +50,21 @@ pixi run python run_dcm.py
 [`setup_dcm.sh`](setup_dcm.sh) first calls [`download_dcm_inputs.sh`](download_dcm_inputs.sh), then [`install_alternet.sh`](install_alternet.sh). It stops if either step fails. The DCM analysis is started separately with the command shown above. Both child scripts can also be run on their own with `./download_dcm_inputs.sh` or `./install_alternet.sh`.
 
 [`download_dcm_inputs.sh`](download_dcm_inputs.sh) downloads the filtered DCM TPM matrix, the Ensembl 116 BioMart mapping and APPRIS 116 from Google Drive (about 161 MB in total) into the paths used by [`run_dcm.py`](AlterNetCode/run_dcm.py). The three files are readable by anyone with their links; no Google login is needed. The script requires Bash, `curl`, and either `sha256sum` or `shasum`, checks each download against its SHA256 checksum, and skips files that already match. The original DIGGER file and human transcription factor list are already included in `AlterNetCode/data/`.
+
+### Run DCM in tmux
+
+After setup, with `tmux` and Pixi available, start a new DCM run in the background from the repository root:
+
+```bash
+./run_dcm_tmux.sh
+```
+
+[`run_dcm_tmux.sh`](run_dcm_tmux.sh) starts `pixi run python -u run_dcm.py` in a detached session named `alternet`. It starts a new analysis; it does not take over a process already running in another terminal. If the session already exists, it shows the command to open it instead of starting another run.
+
+To view the output, connect to the same server where you started the session and run:
+
+```bash
+tmux attach -t alternet
+```
+
+Press **Ctrl+B**, release both keys, then press **D** to detach. The analysis continues if you disconnect from SSH. The session stays open after the analysis finishes and displays its exit code (`0` means success); type `exit` in that session to close it when you are done. Results are written to `AlterNetCode/results/DCM/`.
