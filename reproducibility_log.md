@@ -74,3 +74,7 @@ This log follows my attempt to reproduce Figure 3E/F of AlterNet for the 166 MAG
 ## 11 November 2026 · Using standardized values for network inference
 
 - I asked ChatGPT to change both AlterNet runners so the gene-level network uses the existing standardized gene matrix and the AS-aware network combines standardized TF transcript and gene matrices. The code changes are very small and trivial, changing just two lines in each runner to use the already computed scaled matrices. Transcript TPMs are summed per gene before scaling. `StandardScaler` calculates Z-scores for each gene or transcript across samples. Isoform abundance categories continue to use TPM-based expression percentages. [Pipeline runner](AlterNetCode/src/alternet/runners/run_alternet.py) · [Alternative runner](AlterNetCode/src/alternet/runners/infer_nets.py)
+
+## 11 November 2026 · Preparing the DCM run
+
+- I asked ChatGPT to create a simple [`run_dcm.py`](AlterNetCode/run_dcm.py) with the agreed input paths already set. It loads our filtered DCM TPM matrix, BioMart and APPRIS **116**, and AlterNet's original DIGGER file and TF list. The script starts the pipeline with **10 runs per network** and writes results to `AlterNetCode/results/DCM/` with the prefix `DCM`. I can start it from the `AlterNetCode/` directory with `pixi run python run_dcm.py`.
