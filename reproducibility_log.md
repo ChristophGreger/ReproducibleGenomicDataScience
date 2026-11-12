@@ -78,3 +78,9 @@ This log follows my attempt to reproduce Figure 3E/F of AlterNet for the 166 MAG
 ## 11 November 2026 · Preparing the DCM run
 
 - I asked ChatGPT to create a simple [`run_dcm.py`](AlterNetCode/run_dcm.py) with the agreed input paths already set. It loads our filtered DCM TPM matrix, BioMart and APPRIS **116**, and AlterNet's original DIGGER file and TF list. The script starts the pipeline with **10 runs per network** and writes results to `AlterNetCode/results/DCM/` with the prefix `DCM`. I can start it from the `AlterNetCode/` directory with `pixi run python run_dcm.py`.
+
+## 12 November 2026 · Automating setup and starting DCM in tmux
+
+- I gave ChatGPT detailed instructions to write the download, installation, setup and tmux scripts. [`download_dcm_inputs.sh`](download_dcm_inputs.sh) downloads only our filtered DCM TPM matrix, BioMart **116** and APPRIS **116** from my Google Drive into the required directories. It verifies SHA256 checksums and skips files that already match. The original DIGGER file and TF list are already included in the repository.
+- At my request, download and installation remain separate: [`install_alternet.sh`](install_alternet.sh) runs `pixi install` in `AlterNetCode/`, and [`setup_dcm.sh`](setup_dcm.sh) calls the download script first and the installation script afterwards. Its final message suggests `./run_dcm_tmux.sh` as the next step.
+- [`run_dcm_tmux.sh`](run_dcm_tmux.sh) starts the DCM analysis in a detached tmux session named `alternet`, so it can continue after disconnecting from SSH. I can view the output with `tmux attach -t alternet`. Usage is documented in the [README](README.md#set-up-and-run-dcm).
