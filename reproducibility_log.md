@@ -92,10 +92,6 @@ This log follows my attempt to reproduce Figure 3E/F of AlterNet for the 166 MAG
 
 - A short test in a **Docker container on my Mac** confirmed that the SRA download, FASTQ extraction and kallisto steps also work on Linux: **Ubuntu 24.04.5 LTS (x86_64)**, **Python 3.12.3**, **SRA Toolkit 3.4.1** (`prefetch`, `fasterq-dump`, `fastq-dump`) and **kallisto 0.52.0**. The full dataset was not rerun as it would again take months and wouldn't change anything. 
 
-## 14 November 2026 · A note on documentation
-
-- It's honestly pretty funny that we're expected to document everything properly, while we're working with actual scientific publications whose quality is highly questionable, and not just when it comes to documentation. It does make the seminar feel a bit like an exercise for its own sake.
-
 ## 14 November 2026 · Moving the original AlterNet data to Google Drive
 
 - On my explicit instruction, ChatGPT uploaded all five files from `AlterNetCode/data/` to [Google Drive](https://drive.google.com/drive/folders/1p0U4Lhh7bhk_Rjd-Cs-RZUGlXKb0laK3): the original TF list, APPRIS table, BioMart mapping, DIGGER table and minimal NF TPM matrix. Together they occupy **128,510,671 bytes** (about 129 MB). 

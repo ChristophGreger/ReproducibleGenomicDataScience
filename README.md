@@ -56,4 +56,4 @@ Details: [Data sources](data.md) · [Software environment](environment.md) · [R
 
 ## AI Declaration
 
-Of course, almost none of the documentation or scripts here were written by hand; they were created with AI assistance. I always gave precise instructions for everything, though, except for the script documentation, which is clearly marked as ChatGPT stuff. But I do understand all of it myself (except for that one marked bit, which I don't use but am leaving in for the future). It was still a shitload of work, and I've already gone way beyond the scope of this seminar.
+Of course, almost none of the documentation or scripts here were written by hand; they were created with AI assistance. I always gave precise instructions for everything, though, except for the script documentation, which is clearly marked as ChatGPT stuff. But I do understand all of it myself (except for that one marked bit, which I don't use but am leaving in for the future). It was still very much work, and I've already gone way beyond the scope of this seminar.
