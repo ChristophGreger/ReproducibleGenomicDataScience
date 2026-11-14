@@ -24,7 +24,7 @@ This log follows my attempt to reproduce Figure 3E/F of AlterNet for the 166 MAG
 
 ## 3–4 November 2026 · Trying Linux and comparing alternatives
 
-- My Linux `pixi install` failed. SignifiKANTE required `distributed` 2025.11.0, while Pixi selected 2025.10.0. Discussed clearing the old environment and aligning the versions. 
+- My Linux `pixi install` failed. SignifiKANTE required `distributed` 2025.11.0, while Pixi selected 2025.10.0. The subsequent SignifiKANTE/`distributed` dependency changes resolved this version conflict, and `pixi install` then succeeded on Linux.
 - Compared running on a workstation, in the cloud, or on Colab. These discussions did not produce a full DCM benchmark.
 
 ## 8 November 2026 · Installing the project copy of AlterNet
