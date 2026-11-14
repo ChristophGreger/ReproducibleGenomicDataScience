@@ -91,3 +91,7 @@ This log follows my attempt to reproduce Figure 3E/F of AlterNet for the 166 MAG
 ## 14 November 2026 · Testing preprocessing on Linux
 
 - A short test in a **Docker container on my Mac** confirmed that the SRA download, FASTQ extraction and kallisto steps also work on Linux: **Ubuntu 24.04.5 LTS (x86_64)**, **Python 3.12.3**, **SRA Toolkit 3.4.1** (`prefetch`, `fasterq-dump`, `fastq-dump`) and **kallisto 0.52.0**. The full dataset was not rerun as it would again take months and wouldn't change anything. 
+
+## 14 November 2026 · A note on documentation
+
+- It's honestly pretty funny that we're expected to document everything properly, while we're working with actual scientific publications whose quality is highly questionable, and not just when it comes to documentation. It does make the seminar feel a bit like an exercise for its own sake.
