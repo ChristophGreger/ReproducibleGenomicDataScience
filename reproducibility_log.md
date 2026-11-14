@@ -87,3 +87,7 @@ This log follows my attempt to reproduce Figure 3E/F of AlterNet for the 166 MAG
 
 - I started the full DCM analysis today. The run is in progress and is expected to take approximately **10 hours** in total.
 - The authors used **48 CPU cores (96 hardware threads)** and approximately **500 GB RAM**. My run uses an **Intel Xeon w3-2435** workstation with **64 GB RAM**. Observed memory usage is currently only about **7 GB**, so the large amount of RAM available to the authors does not appear necessary for my current DCM configuration.
+
+## 14 November 2026 · Testing preprocessing on Linux
+
+- A short test in a **Docker container on my Mac** confirmed that the SRA download, FASTQ extraction and kallisto steps also work on Linux: **Ubuntu 24.04.5 LTS (x86_64)**, **Python 3.12.3**, **SRA Toolkit 3.4.1** (`prefetch`, `fasterq-dump`, `fastq-dump`) and **kallisto 0.52.0**. The full dataset was not rerun as it would again take months and wouldn't change anything. 

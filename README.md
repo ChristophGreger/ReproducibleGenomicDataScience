@@ -25,6 +25,8 @@ From the repository root:
 
 This downloads the prepared DCM inputs into `files/` and installs AlterNet with Pixi.
 
+See [Rebuilding the inputs](environment.md#rebuilding-the-inputs) for the preprocessing setup and the storage and network constraints of the available university machines.
+
 ## Initial test
 
 Check that the pipeline imports successfully:

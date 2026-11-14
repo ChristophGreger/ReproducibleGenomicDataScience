@@ -20,7 +20,9 @@ Tools used by the repository scripts and documented workflow are listed below.
 
 These tools are needed when rerunning the preprocessing in `Steps/`, rather than downloading the prepared inputs.
 
-I downloaded the SRA reads and ran kallisto on my **Mac**, installing SRA Toolkit and kallisto with **Homebrew**. I knowingly went against the requirement to do all work on Linux because none of the university Linux machines available to me offered the bandwidth and storage space I had on my Mac (and that I needed). The DCM network inference itself runs on Linux.
+I downloaded the SRA reads and ran kallisto on my **Mac**, installing SRA Toolkit and kallisto with **Homebrew**. The CIP-pool computers and university workstations available to me did not provide sufficient storage space and network bandwidth for the raw-data downloads and temporary FASTQ files. I therefore consider the requirement to perform all work on those machines inapplicable to preprocessing in my case. I had also not been told in advance to expect such extensive and complex preprocessing.
+
+The DCM network inference itself runs on a university Linux workstation. A short test in a Docker container on my Mac confirmed that the SRA Toolkit and kallisto preprocessing steps also work on Linux; the exact versions and test scope are recorded in the [reproducibility log](reproducibility_log.md#14-november-2026--testing-preprocessing-on-linux).
 
 | Tool | Version | Purpose |
 | --- | --- | --- |
