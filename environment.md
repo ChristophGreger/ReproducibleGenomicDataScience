@@ -1,6 +1,6 @@
 # Software environment
 
-Tools used by the repository scripts and documented workflow are listed below. **TBD** means that the installed version still needs to be recorded. Record versions for the machine where each step was run.
+Tools used by the repository scripts and documented workflow are listed below. 
 
 ## DCM setup and execution
 
@@ -10,7 +10,6 @@ Tools used by the repository scripts and documented workflow are listed below. *
 | Pixi | 0.84.0 | Installs the AlterNet environment and runs Python. |
 | Git | 2.39.5 | Clones the repository and fetches the SignifiKANTE dependency over HTTPS. |
 | curl | 7.88.1 (Debian package 7.88.1-10+deb12u15) | Downloads the prepared inputs from Google Drive; also used in Step 4. |
-| GNU Wget (optional) | 1.21.3 | Manual downloads; the current scripts use `curl`. |
 | tmux | 3.3a | Runs DCM in a session that survives SSH disconnection. |
 | `sha256sum` (GNU coreutils) | 9.1 | Verifies downloaded inputs. |
 | GNU Awk | 5.2.1 | Extracts the checksum from command output. |
@@ -21,12 +20,12 @@ Tools used by the repository scripts and documented workflow are listed below. *
 
 These tools are needed when rerunning the preprocessing in `Steps/`, rather than downloading the prepared inputs.
 
-I downloaded the SRA reads and ran kallisto on my **Mac**, installing SRA Toolkit and kallisto with **Homebrew**. I knowingly went against the requirement to do all work on Linux because none of the university Linux machines available to me offered the bandwidth and storage space I had on my Mac. The DCM network inference itself runs on Linux.
+I downloaded the SRA reads and ran kallisto on my **Mac**, installing SRA Toolkit and kallisto with **Homebrew**. I knowingly went against the requirement to do all work on Linux because none of the university Linux machines available to me offered the bandwidth and storage space I had on my Mac (and that I needed). The DCM network inference itself runs on Linux.
 
 | Tool | Version | Purpose |
 | --- | --- | --- |
 | Homebrew | 7.0.11 | Installs SRA Toolkit and kallisto on macOS. |
-| Python 3 (`python3`) | 3.14.9 | Reported standalone Python version; separate from Pixi's Python. Runs the Step 1–4 scripts, which otherwise use the Python standard library.  |
+| Python 3 (`python3`) | 3.14.9 | Reported standalone Python version; separate from Pixi's Python. Runs the Step 1–4 scripts, which otherwise use the Python standard library. (but any python3 version should do it)  |
 | NCBI SRA Toolkit: `prefetch`, `fasterq-dump` | 3.4.1 (both tools) | Downloads SRA reads in Step 1 and extracts FASTQs in Step 2. |
 | kallisto | 0.52.0 | Builds the transcriptome index and quantifies reads in Step 2. |
 

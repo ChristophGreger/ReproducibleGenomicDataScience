@@ -8,7 +8,14 @@ Seminar project reproducing **Figure 3E/F of AlterNet** using RNA-seq data from 
 
 ## Set up and run DCM
 
-Install the [external DCM tools](environment.md#dcm-setup-and-execution), including [Pixi](https://pixi.prefix.dev/latest/installation/). Supported platforms are Linux x86_64 
+Clone the repository and enter the project directory:
+
+```bash
+git clone https://github.com/ChristophGreger/ReproducibleGenomicDataScience.git
+cd ReproducibleGenomicDataScience
+```
+
+Install the [external DCM tools](environment.md#dcm-setup-and-execution), including [Pixi](https://pixi.prefix.dev/latest/installation/). The supported platform is Linux x86_64.
 
 From the repository root:
 
@@ -37,6 +44,8 @@ Detach with **Ctrl+B**, release both keys, then press **D**. Results are saved i
 
 ## Current status · 12 November 2026
 
-Preprocessing is complete and the Linux setup works. The full DCM run has started on `bs201.ur.de` (Intel Xeon w3-2435); its first canonical repetition completed in 15 minutes 50 seconds. About 5-10 hours of computation left...
+Preprocessing is complete and the Linux setup works. The full DCM run has started on `bs201.ur.de` (Intel Xeon w3-2435); its first canonical repetition completed in 15 minutes 50 seconds. About 5-10 hours of computation left.  
+  
+Update November 13: The reset of the workstations deleted the finished run. Started new Run. Results probably on November 14
 
 Details: [Data sources](data.md) · [Software environment](environment.md) · [Reproducibility log](reproducibility_log.md) · [Preprocessing steps](Steps/) 
