@@ -46,7 +46,7 @@ Detach with **Ctrl+B**, release both keys, then press **D**. Results are saved i
 
 ## Current status · 12 November 2026
 
-Preprocessing is complete and the Linux setup works. The full DCM run has started on `bs201.ur.de` (Intel Xeon w3-2435); its first canonical repetition completed in 15 minutes 50 seconds. About 5-10 hours of computation left.  
+Preprocessing is complete and the Linux setup works. The full DCM run has started on `bs201.ur.de` (Debian 12 Bookworm, Intel Xeon w3-2435); its first canonical repetition completed in 15 minutes 50 seconds. About 5-10 hours of computation left.
   
 Update November 13: The reset of the workstations deleted the finished run. Started new Run. Results probably on November 14
 

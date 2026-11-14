@@ -4,6 +4,8 @@ Tools used by the repository scripts and documented workflow are listed below.
 
 ## DCM setup and execution
 
+The DCM analysis runs on the university workstation `bs201.ur.de` with **Debian 12 (Bookworm)**.
+
 | Tool | Version | Purpose |
 | --- | --- | --- |
 | Bash | 5.2.15(1)-release (x86_64-pc-linux-gnu) | Runs the root `.sh` scripts. |

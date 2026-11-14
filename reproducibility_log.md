@@ -86,7 +86,7 @@ This log follows my attempt to reproduce Figure 3E/F of AlterNet for the 166 MAG
 ## 13 November 2026 · Starting the full DCM run
 
 - I started the full DCM analysis today. The run is in progress and is expected to take approximately **10 hours** in total.
-- The authors used **48 CPU cores (96 hardware threads)** and approximately **500 GB RAM**. My run uses an **Intel Xeon w3-2435** workstation with **64 GB RAM**. Observed memory usage is currently only about **7 GB**, so the large amount of RAM available to the authors does not appear necessary for my current DCM configuration.
+- The authors used **48 CPU cores (96 hardware threads)** and approximately **500 GB RAM**. My run uses the workstation `bs201.ur.de` with **Debian 12 (Bookworm)**, an **Intel Xeon w3-2435** and **64 GB RAM**. Observed memory usage is currently only about **7 GB**, so the large amount of RAM available to the authors does not appear necessary for my current DCM configuration.
 
 ## 14 November 2026 · Testing preprocessing on Linux
 
