@@ -51,3 +51,7 @@ Preprocessing is complete and the Linux setup works. The full DCM run has starte
 Update November 13: The reset of the workstations deleted the finished run. Started new Run. Results probably on November 14
 
 Details: [Data sources](data.md) · [Software environment](environment.md) · [Reproducibility log](reproducibility_log.md) · [Preprocessing steps](Steps/) 
+
+## AI Declaration
+
+Of course, almost none of the documentation or scripts here were written by hand; they were created with AI assistance. I always gave precise instructions for everything, though, except for the script documentation, which is clearly marked as ChatGPT stuff. But I do understand all of it myself (except for that one marked bit, which I don't use but am leaving in for the future). It was still a shitload of work, and I've already gone way beyond the scope of this seminar.
