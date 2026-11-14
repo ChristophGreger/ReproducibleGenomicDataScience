@@ -11,7 +11,7 @@ The DCM analysis runs on the university workstation `bs201.ur.de` with **Debian 
 | Bash | 5.2.15(1)-release (x86_64-pc-linux-gnu) | Runs the root `.sh` scripts. |
 | Pixi | 0.84.0 | Installs the AlterNet environment and runs Python. |
 | Git | 2.39.5 | Clones the repository and fetches the SignifiKANTE dependency over HTTPS. |
-| curl | 7.88.1 (Debian package 7.88.1-10+deb12u15) | Downloads the prepared inputs from Google Drive; also used in Step 4. |
+| curl | 7.88.1 (Debian package 7.88.1-10+deb12u15) | Downloads the prepared DCM inputs and original AlterNet example files from Google Drive; also used in Step 4. |
 | tmux | 3.3a | Runs DCM in a session that survives SSH disconnection. |
 | `sha256sum` (GNU coreutils) | 9.1 | Verifies downloaded inputs. |
 | GNU Awk | 5.2.1 | Extracts the checksum from command output. |

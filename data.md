@@ -2,6 +2,12 @@
 
 The following inputs are used for the AlterNet reproduction on the MAGNet dilated cardiomyopathy (DCM) cohort. Local paths are relative to the repository root.
 
+## Download the prepared inputs
+
+Run `bash download_dcm_inputs.sh` from the repository root, or use `./setup_dcm.sh` to download the inputs and install the environment. The script downloads the three prepared DCM inputs into `files/` and all five files originally supplied in the authors' `data/` directory into `AlterNetCode/data/`. All eight files are hosted on Google Drive and kept outside Git. Each download is verified against its SHA-256 checksum; matching local files are skipped.
+
+The original example files are `allTFs_hg38.txt`, `appris_data.appris.txt`, `biomart.txt`, `digger_data.csv`, and `minimal_NF_magnet_prefiltered_tpm.tsv`, hosted in this [Google Drive folder](https://drive.google.com/drive/folders/1p0U4Lhh7bhk_Rjd-Cs-RZUGlXKb0laK3). Their contents and local paths are preserved. The DCM run uses the original DIGGER file and TF list together with our prepared Ensembl 116 inputs; the other three original files remain available for the authors' minimal example and annotation comparisons.
+
 ## MAGNet RNA-seq reads
 
 We use the raw SRA reads from **166 DCM runs** in BioProject **PRJNA595151** (GEO **GSE141910**, SRA study **SRP237337**). The checked-in accession list defines the exact cohort. The download script uses the NCBI SRA Toolkit and saves the reads under `files/sequences/`. [NCBI SRA Run Selector](https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA595151) · [Run accession list](Steps/Step1_Downloading_Sequences/SRR_Acc_List.txt) · [Download script instructions](Steps/Step1_Downloading_Sequences/ReadMe.md)
@@ -39,11 +45,11 @@ We use the raw SRA reads from **166 DCM runs** in BioProject **PRJNA595151** (GE
 
 ## DIGGER annotations
 
-We use the DIGGER file bundled with AlterNet in this repository for the Pfam domain comparisons. [digger_data.csv](AlterNetCode/data/digger_data.csv)
+We use the DIGGER file originally supplied with AlterNet for the Pfam domain comparisons. The download script restores it from Google Drive to `AlterNetCode/data/digger_data.csv`.
 
 ## Human transcription factor list
 
-We use the human transcription factor list bundled with the authors' AlterNet code.  [allTFs_hg38.txt](AlterNetCode/data/allTFs_hg38.txt)
+We use the human transcription factor list originally supplied with the authors' AlterNet code. The download script restores it from Google Drive to `AlterNetCode/data/allTFs_hg38.txt`.
 
 ## Download checksums
 
@@ -51,8 +57,14 @@ These SHA-256 values identify the local copies used for the reproduction. A rege
 
 ```text
 daafc3331285e95ea4efdeb359eb176840e77c16d905630f2788d1141e224bdc  files/kallisto/cdna.fa.bgz
+7f765ba264becd0d799bd9aa2757e4b3419e56f334ca3520ebdc24e8de6a5aa2  files/matrix/filtered/transcript_tpm_filtered.tsv
 bf5a206246dcd64b48de9c103788f9773de3144f7f83463381bbc18d863d020e  files/special_files/biomart_ensembl116.txt
 a69a3e7ffc194d934c8bdeed8eaef1a9127aa3db71b697f26313170497b3bad0  files/special_files/appris_data.appris.txt
+31589edf4d87ac6d4cbc0175c362d8a8171204260a59670b3000df449715cf4a  AlterNetCode/data/allTFs_hg38.txt
+f0ee8ad511f9e018f6163de21356e785888a86f7a26bc288911071603f3f535d  AlterNetCode/data/appris_data.appris.txt
+2dae9284e3fc60d09444983f20dd0d0bccc1226508a46ee2c238f92f3556b8ae  AlterNetCode/data/biomart.txt
+6c58c2b015c800b8a82447635e3787b292388d691236c46de01d3a8e4312113b  AlterNetCode/data/digger_data.csv
+756be4d5a2279a1c425c4a1ab59d7d2d006157f203ac6b710124905dd6c27772  AlterNetCode/data/minimal_NF_magnet_prefiltered_tpm.tsv
 ```
 
 ## Ensembl version provenance

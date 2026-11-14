@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Download the three external inputs used by AlterNetCode/run_dcm.py.
+# Download the prepared DCM inputs and all original AlterNet example data.
 # Usage from the repository root: bash download_dcm_inputs.sh
 set -euo pipefail
 
@@ -59,4 +59,24 @@ download "1qsYYQbGV6dSeisZ5_d_iztgG2jqeCHaG" \
     "files/special_files/appris_data.appris.txt" \
     "a69a3e7ffc194d934c8bdeed8eaef1a9127aa3db71b697f26313170497b3bad0"
 
-printf 'All DCM inputs are ready.\n'
+download "1o7zCBcOB8KiPJqYyJOWP5Dr_BnhtLxLL" \
+    "AlterNetCode/data/allTFs_hg38.txt" \
+    "31589edf4d87ac6d4cbc0175c362d8a8171204260a59670b3000df449715cf4a"
+
+download "1-glHCdMPTEXSi2GtJuk7CqN6eqkX8_EY" \
+    "AlterNetCode/data/appris_data.appris.txt" \
+    "f0ee8ad511f9e018f6163de21356e785888a86f7a26bc288911071603f3f535d"
+
+download "1gKiZjqj6VLafd6F8CyPzpMP-pDh7W_p_" \
+    "AlterNetCode/data/biomart.txt" \
+    "2dae9284e3fc60d09444983f20dd0d0bccc1226508a46ee2c238f92f3556b8ae"
+
+download "1E0LOj6GcYxXQHPzF0gmiJHburdZoMm5J" \
+    "AlterNetCode/data/digger_data.csv" \
+    "6c58c2b015c800b8a82447635e3787b292388d691236c46de01d3a8e4312113b"
+
+download "1Q9tVBWAiEYNsPM6NCIT3oPH65zWZVY6-" \
+    "AlterNetCode/data/minimal_NF_magnet_prefiltered_tpm.tsv" \
+    "756be4d5a2279a1c425c4a1ab59d7d2d006157f203ac6b710124905dd6c27772"
+
+printf 'All DCM and AlterNet example inputs are ready.\n'

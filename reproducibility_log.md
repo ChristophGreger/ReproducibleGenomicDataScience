@@ -95,3 +95,9 @@ This log follows my attempt to reproduce Figure 3E/F of AlterNet for the 166 MAG
 ## 14 November 2026 · A note on documentation
 
 - It's honestly pretty funny that we're expected to document everything properly, while we're working with actual scientific publications whose quality is highly questionable, and not just when it comes to documentation. It does make the seminar feel a bit like an exercise for its own sake.
+
+## 14 November 2026 · Moving the original AlterNet data to Google Drive
+
+- On my explicit instruction, ChatGPT uploaded all five files from `AlterNetCode/data/` to [Google Drive](https://drive.google.com/drive/folders/1p0U4Lhh7bhk_Rjd-Cs-RZUGlXKb0laK3): the original TF list, APPRIS table, BioMart mapping, DIGGER table and minimal NF TPM matrix. Together they occupy **128,510,671 bytes** (about 129 MB). 
+- At my request, ChatGPT removed these files from Git tracking and added the data directory to `.gitignore`. The local copies remain at their original paths; earlier Git commits still contain the previously tracked copies. [`download_dcm_inputs.sh`](download_dcm_inputs.sh) now downloads all five files alongside the three prepared DCM inputs, verifies their SHA-256 checksums and skips files that already match. [`setup_dcm.sh`](setup_dcm.sh) downloads all eight inputs before installing AlterNet. [Data and checksums](data.md#download-checksums)
+- Once again, I find it very funny that we are told in the seminar not to upload large files to GitHub, while the authors of the actual paper of course do exactly that. I am now following that rule by keeping the data in Google Drive and excluding the downloaded copies from Git. 

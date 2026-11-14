@@ -34,6 +34,8 @@ pip install . -e
 GRN inference is a computationally heavy step. The minimal example can be run on a small subset of the data with a couple of target genes. (NOTE: it is possible that
 not all files are created)
 
+In this reproduction repository, first run `bash download_dcm_inputs.sh` from the repository root (one directory above `AlterNetCode/`). This downloads the five original example files from Google Drive into `AlterNetCode/data/` and verifies their SHA-256 checksums. These files are kept outside Git; `./setup_dcm.sh` also downloads them automatically.
+
 
 ```{python}
 import pandas as pd
@@ -47,7 +49,7 @@ import os.path as op
 import os
 
 
-# The data folder shipped with the repo
+# The data folder restored by download_dcm_inputs.sh
 basepath = "../data/"
 #your results
 results_path = "../results_minimal/"

@@ -23,7 +23,9 @@ From the repository root:
 ./setup_dcm.sh
 ```
 
-This downloads the prepared DCM inputs into `files/` and installs AlterNet with Pixi.
+This downloads the prepared DCM inputs into `files/` and all five original AlterNet example files into `AlterNetCode/data/` from Google Drive, then installs AlterNet with Pixi. The data files are not tracked in Git. Downloads are checked against SHA-256 checksums, and existing files with matching checksums are skipped.
+
+To download the inputs without installing the environment, run `bash download_dcm_inputs.sh` from the repository root.
 
 See [Rebuilding the inputs](environment.md#rebuilding-the-inputs) for the preprocessing setup and the storage and network constraints of the available university machines.
 

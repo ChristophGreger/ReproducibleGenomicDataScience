@@ -197,11 +197,6 @@ cython_debug/
 # pixi environments
 .pixi
 *.egg-info
-data/appris_data.appris.txt
-data/digger_data.csv
+/data/
 configs/Liver.yaml
 results/
-
-# Keep the reference data included in the copied upstream repository versioned.
-!data/appris_data.appris.txt
-!data/digger_data.csv
